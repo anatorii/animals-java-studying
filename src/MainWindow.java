@@ -23,7 +23,8 @@ public class MainWindow extends JFrame {
     private JButton foxesButton;
     private JButton dogsButton;
     private JPanel imagePanel;
-    int countFoxes = 0;
+    private int countFoxes = 0;
+    public Image image;
 
     public MainWindow() {
         super("Загрузить картинку");
@@ -78,9 +79,8 @@ public class MainWindow extends JFrame {
         if (url == null) {
             return;
         }
-        Image image = ImageIO.read(url);
-        imagePanel.getGraphics().clearRect(0, 0, imagePanel.getSize().width, imagePanel.getSize().height);
-        imagePanel.getGraphics().drawImage(image, 20, 20, null);
+        image = ImageIO.read(url);
+        imagePanel.repaint();
     }
 
     private URL getDogUrl() throws IOException {
@@ -119,5 +119,24 @@ public class MainWindow extends JFrame {
         BufferedReader bufferedReader = new BufferedReader(reader);
 
         return bufferedReader.lines().collect(Collectors.joining(""));
+    }
+
+    private void createUIComponents() {
+        imagePanel = new ImagePanel();
+        imagePanel.setLayout(new BorderLayout());
+    }
+}
+
+class ImagePanel extends JPanel {
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        MainWindow frame = (MainWindow) SwingUtilities.getWindowAncestor(this);
+        if (frame.image != null) {
+            g.clearRect(0, 0, getSize().width, getSize().height);
+            g.drawImage(frame.image,
+                    (getSize().width - frame.image.getWidth(null)) / 2,
+                    (getSize().height - frame.image.getHeight(null)) / 2, null);
+        }
     }
 }

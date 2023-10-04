@@ -49,9 +49,12 @@
           </component>
         </children>
       </grid>
-      <grid id="837d4" binding="imagePanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <grid id="837d4" binding="imagePanel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="Center"/>
-        <properties/>
+        <properties>
+          <background color="-592390"/>
+          <enabled value="true"/>
+        </properties>
         <border type="none"/>
         <children/>
       </grid>
